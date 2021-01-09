@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe NatureRemoE::Client do
+RSpec.describe NatureRemoE::Client do # rubocop:disable Metrics/BlockLength
   let(:uri) { 'https://api.nature.global/1/appliances' }
   let(:client) { described_class.new(anything) }
 
