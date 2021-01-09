@@ -1,8 +1,6 @@
 # NatureRemoE
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/nature_remo_e`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Nature Remo API client for Nature Remo E
 
 ## Installation
 
@@ -22,7 +20,39 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'nature_remo_e'
+
+client = NatureRemoE::Client.new('token')
+
+client.echonetlite_properties
+#=> {
+#     :coefficient=>1,
+#     :cumulative_electric_energy_effective_digits=>6,
+#     :normal_direction_cumulative_electric_energy=>36039,
+#     :cumulative_electric_energy_unit=>1,
+#     :reverse_direction_cumulative_electric_energy=>10,
+#     :measured_instantaneous=>630
+#   }
+
+client.coefficient
+#=> 1
+
+client.cumulative_electric_energy_effective_digits
+#=> 6
+
+client.normal_direction_cumulative_electric_energy
+#=> 36039
+
+client.cumulative_electric_energy_unit
+#=> 1
+
+client.reverse_direction_cumulative_electric_energy
+#=> 10
+
+client.measured_instantaneous
+#=> 630
+```
 
 ## Development
 
