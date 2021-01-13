@@ -53,11 +53,17 @@ module NatureRemoE
         req.url '/1/appliances'
       end
 
+      raise NatureRemoE::Error, JSON.parse(response.body, symbolize_names: true)[:message] if response.status != 200
+
       JSON.parse(response.body, symbolize_names: true)
     end
 
     def device
-      appliances.find { |appliance| appliance[:type] == 'EL_SMART_METER' }
+      appliance = appliances.find { |appliance| appliance[:type] == 'EL_SMART_METER' }
+
+      raise NatureRemoE::Error, 'Device not found' if appliance.nil?
+
+      appliance
     end
   end
 end

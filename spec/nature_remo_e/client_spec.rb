@@ -3,9 +3,11 @@
 RSpec.describe NatureRemoE::Client do # rubocop:disable Metrics/BlockLength
   let(:uri) { 'https://api.nature.global/1/appliances' }
   let(:client) { described_class.new(anything) }
+  let(:body) { open('./spec/files/appliances.json').read }
+  let(:response) { { status: 200, body: body } }
 
   before do
-    stub_request(:get, uri).to_return(status: 200, body: open('./spec/files/appliances.json').read)
+    stub_request(:get, uri).to_return(response)
   end
 
   describe '#echonetlite_properties' do
@@ -20,6 +22,22 @@ RSpec.describe NatureRemoE::Client do # rubocop:disable Metrics/BlockLength
         reverse_direction_cumulative_electric_energy: 10,
         measured_instantaneous: 620
       )
+    end
+
+    context 'invalid token' do
+      let(:response) { { status: 400, body: { code: 401, message: 'Unauthorized' }.to_json } }
+
+      it do
+        expect{subject}.to raise_error(NatureRemoE::Error, 'Unauthorized')
+      end
+    end
+
+    context 'no device' do
+      let(:body) { open('./spec/files/appliances_no_device.json').read }
+
+      it do
+        expect{subject}.to raise_error(NatureRemoE::Error, 'Device not found')
+      end
     end
   end
 
