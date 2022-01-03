@@ -59,7 +59,7 @@ module NatureRemoE
     end
 
     def device
-      appliance = appliances.find { |appliance| appliance[:type] == 'EL_SMART_METER' }
+      appliance = appliances.find { |app| app[:type] == 'EL_SMART_METER' }
 
       raise NatureRemoE::Error, 'Device not found' if appliance.nil?
 
