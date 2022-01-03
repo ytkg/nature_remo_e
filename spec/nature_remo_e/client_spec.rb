@@ -28,7 +28,7 @@ RSpec.describe NatureRemoE::Client do # rubocop:disable Metrics/BlockLength
       let(:response) { { status: 400, body: { code: 401, message: 'Unauthorized' }.to_json } }
 
       it do
-        expect{subject}.to raise_error(NatureRemoE::Error, 'Unauthorized')
+        expect { subject }.to raise_error(NatureRemoE::Error, 'Unauthorized')
       end
     end
 
@@ -36,7 +36,7 @@ RSpec.describe NatureRemoE::Client do # rubocop:disable Metrics/BlockLength
       let(:body) { open('./spec/files/appliances_no_device.json').read }
 
       it do
-        expect{subject}.to raise_error(NatureRemoE::Error, 'Device not found')
+        expect { subject }.to raise_error(NatureRemoE::Error, 'Device not found')
       end
     end
   end
