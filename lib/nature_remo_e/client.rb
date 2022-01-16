@@ -10,9 +10,9 @@ module NatureRemoE
     end
 
     def echonetlite_properties
-      device[:smart_meter][:echonetlite_properties].map do |echonetlite_property|
+      device[:smart_meter][:echonetlite_properties].to_h do |echonetlite_property|
         [echonetlite_property[:name].to_sym, echonetlite_property[:val].to_i]
-      end.to_h
+      end
     end
 
     def coefficient
