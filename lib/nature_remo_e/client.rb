@@ -5,6 +5,9 @@ require 'json'
 
 module NatureRemoE
   class Client
+    BASE_URL = 'https://api.nature.global'
+    API_VERSION = '1'
+
     def initialize(token)
       @token = token
     end
@@ -41,21 +44,25 @@ module NatureRemoE
 
     private
 
+    def headers
+      {
+        'User-Agent' => "NatureRemoE v#{NatureRemoE::VERSION} (https://github.com/ytkg/nature_remo_e)",
+        'Authorization' => "Bearer #{@token}"
+      }
+    end
+
     def client
-      @client ||= Faraday.new(
-        url: 'https://api.nature.global',
-        headers: { Authorization: "Bearer #{@token}" }
-      )
+      @client ||= Faraday.new(url: "#{BASE_URL}/#{API_VERSION}", headers: headers) do |f|
+        f.response :json, parser_options: { symbolize_names: true }
+      end
     end
 
     def appliances
-      response = client.get do |req|
-        req.url '/1/appliances'
-      end
+      response = client.get('appliances')
 
-      raise NatureRemoE::Error, JSON.parse(response.body, symbolize_names: true)[:message] if response.status != 200
+      raise NatureRemoE::Error, response.body[:message] if response.status != 200
 
-      JSON.parse(response.body, symbolize_names: true)
+      response.body
     end
 
     def device

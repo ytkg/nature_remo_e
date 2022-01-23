@@ -3,8 +3,9 @@
 RSpec.describe NatureRemoE::Client do # rubocop:disable Metrics/BlockLength
   let(:uri) { 'https://api.nature.global/1/appliances' }
   let(:client) { described_class.new(anything) }
+  let(:headers) { { 'Content-Type' => 'application/json' } }
   let(:body) { open('./spec/files/appliances.json').read }
-  let(:response) { { status: 200, body: body } }
+  let(:response) { { status: 200, headers: headers, body: body } }
 
   before do
     stub_request(:get, uri).to_return(response)
@@ -25,7 +26,7 @@ RSpec.describe NatureRemoE::Client do # rubocop:disable Metrics/BlockLength
     end
 
     context 'invalid token' do
-      let(:response) { { status: 400, body: { code: 401, message: 'Unauthorized' }.to_json } }
+      let(:response) { { status: 400, headers: headers, body: { code: 401, message: 'Unauthorized' }.to_json } }
 
       it do
         expect { subject }.to raise_error(NatureRemoE::Error, 'Unauthorized')
