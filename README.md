@@ -54,6 +54,45 @@ client.measured_instantaneous
 #=> 630
 ```
 
+### CLI
+```bash
+$ remoe
+coefficient: 1
+cumulative_electric_energy_effective_digits: 6
+normal_direction_cumulative_electric_energy: 72164
+cumulative_electric_energy_unit: 1
+reverse_direction_cumulative_electric_energy: 10
+measured_instantaneous: 651
+
+$ bundle exec ruby exe/remoe --json | jq .
+{
+  "coefficient": 1,
+  "cumulative_electric_energy_effective_digits": 6,
+  "normal_direction_cumulative_electric_energy": 72164,
+  "cumulative_electric_energy_unit": 1,
+  "reverse_direction_cumulative_electric_energy": 10,
+  "measured_instantaneous": 651
+}
+
+$ remoe coefficient
+1
+
+$ remoe cumulative_electric_energy_effective_digits
+6
+
+$ remoe normal_direction_cumulative_electric_energy
+72164
+
+$ remoe cumulative_electric_energy_unit
+1
+
+$ remoe reverse_direction_cumulative_electric_energy
+10
+
+$ remoe measured_instantaneous
+651
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
